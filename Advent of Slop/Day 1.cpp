@@ -4796,25 +4796,31 @@ vector<string> codeArr = {
 };
 
 
-    for (int i = 0; i < 4780; i++) {
+
+    for (int i = 0; i < codeArr.size(); i++) {
         moveBy = stoi(codeArr[i].substr(1));
 
         if (codeArr[i][0] == 'L'){
+            cout << lockStand << " - " << moveBy<< "L \n";
 
             lockStand -= moveBy;
 //            If -1, become 99
-            while (lockStand < 0) {lockStand += 100; };
-
-            cout << lockStand << " - " << moveBy<< "L \n";
+           if(true) { while (lockStand < 0) {
+                lockStand += 100;
+                passcode += 1;
+            }} else {if (lockStand =  0) { passcode += 1; }}
         } else { //if == "R"
+            cout << lockStand << " + " << moveBy << "R  \n";
 
             lockStand += moveBy;
 //            If 100, become 0
-            while (lockStand > 99) {lockStand -= 100; };
-
-            cout << lockStand << " + " << moveBy << "R \n";
+            while (lockStand > 99) {
+                lockStand -= 100;
+                passcode += 1;
+                }
         }
-        if (lockStand == 0) { passcode += 1; };
+        cout << passcode << "\n";
+
     };
 
     cout << "Your final passcode is: " << passcode;
