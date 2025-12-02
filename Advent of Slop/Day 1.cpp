@@ -7,11 +7,10 @@ using namespace std;
 int main() {
 //    write here
 int lockStand = 50;
+int initStand;
 int pos;
 int moveBy;
 int passcode;
-string sub;
-// int pos = ;
 vector<string> codeArr = {
     "L20",
     "L13",
@@ -4796,35 +4795,83 @@ vector<string> codeArr = {
 };
 
 
+//    for (int i = 0; i < codeArr.size(); i++) {
+//        moveBy = stoi(codeArr[i].substr(1));
+//
+//        if (codeArr[i][0] == 'L'){
+//            cout << lockStand << " - " << moveBy << "L \n";
+//            initStand = lockStand;
+//            lockStand -= moveBy;
+//            if (initStand == 0 && lockStand < 0){
+//                lockStand += 100;
+//                cout << "YUP\n";
+//            }
+////            If -1, become 99
+//            while (lockStand < 0) {
+//                lockStand += 100;
+//                passcode += 1;
+//                cout << "Ping!\n";
+////                if (lockStand == 0){ passcode+1; cout << "Ping!\n";}
+//            }
+//        } else { //if == "R"
+//            cout << lockStand << " + " << moveBy << "R \n";
+//
+//            lockStand += moveBy;
+////            If 100, become 0
+//            while (lockStand > 99) {
+//                lockStand -= 100;
+//                passcode += 1;
+//                cout << "Ping!\n";
+//            };
+//        }
+//    };
 
-    for (int i = 0; i < codeArr.size(); i++) {
+    for (int i = 0; i < codeArr.size(); i++){
         moveBy = stoi(codeArr[i].substr(1));
+        if (codeArr[i][0] == 'L') {
+            for (int x = 0; x < moveBy; x++){
+                lockStand -= 1;
+                switch (lockStand){
+                    case -1:
+                        lockStand += 100;
+                        break;
 
-        if (codeArr[i][0] == 'L'){
-            cout << lockStand << " - " << moveBy<< "L \n";
+                    case 100:
+                        lockStand -= 100;
+                        passcode += 1;
+                        break;
 
-            lockStand -= moveBy;
-//            If -1, become 99
-           if(true) { while (lockStand < 0) {
-                lockStand += 100;
-                passcode += 1;
-            }} else {if (lockStand =  0) { passcode += 1; }}
-        } else { //if == "R"
-            cout << lockStand << " + " << moveBy << "R  \n";
-
-            lockStand += moveBy;
-//            If 100, become 0
-            while (lockStand > 99) {
-                lockStand -= 100;
-                passcode += 1;
+                    case 0:
+                        passcode += 1;
+                        break;
                 }
-        }
-        cout << passcode << "\n";
+            }
+        } else { /* if == 'R' */
+            for (int x = 0; x < moveBy; x++){
+                lockStand += 1;
+                switch (lockStand){
+                    case -1:
+                        lockStand += 100;
+                        break;
 
-    };
+                    case 100:
+                        lockStand -= 100;
+                        passcode += 1;
+                        break;
+
+                    case 0:
+                        passcode += 1;
+                        break;
+                }
+            }
+        }
+    }
 
     cout << "Your final passcode is: " << passcode;
     return 0;
 }
 
 
+//als ik op 0 begin, en naar links moet, telt het als een punt.
+//check eerst of beginpunt 0 is. zo ja, EN als het links is, voeg geen punt toe
+//als beginpunt 99 is
